@@ -1,7 +1,7 @@
 ---
 reviewers:
 - chenopis
-title: The Kubernetes API
+title: (WIP) L'API Kubernetes
 content_type: concept
 weight: 30
 description: >
@@ -14,22 +14,27 @@ card:
 
 <!-- overview -->
 
-The core of Kubernetes' {{< glossary_tooltip text="control plane" term_id="control-plane" >}}
-is the {{< glossary_tooltip text="API server" term_id="kube-apiserver" >}}. The API server
-exposes an HTTP API that lets end users, different parts of your cluster, and
-external components communicate with one another.
+Le coeur du {{< glossary_tooltip text="plan de contrôle" term_id="control-plane" >}} 
+de Kubernetes est le {{< glossary_tooltip text=" serveur d'API" term_id="kube-apiserver" >}}. 
+Le serveur d'API expose une API HTTP qui permet aux utilisateurs finaux, à différents éléments de votre cluster, 
+et à des composants externes de communiquer ensemble.
 
-The Kubernetes API lets you query and manipulate the state of API objects in Kubernetes
-(for example: Pods, Namespaces, ConfigMaps, and Events).
+L'API Kubernetes vous permet d'interroger et de manipuler l'état des objets dans Kubernetes
+(par exemple: les Pods, les Namespaces, les ConfigMaps, et les Events).
 
-Most operations can be performed through the
+La plupart des opérations sont réalisées à l'aide de l'interface en ligne de commande 
+[kubectl](/fr/docs/reference/kubectl/overview/) 
+ou tout autres outils en ligne de commande, tel que 
+[kubeadm](/fr/docs/reference/setup-tools/kubeadm/), **which in turn use the
+API.** Cependant, il est également possible d'accéder directement à l'API via des appels (de type) REST.
+
+<!-- Most operations can be performed through the
 [kubectl](/docs/reference/kubectl/overview/) command-line interface or other
 command-line tools, such as
 [kubeadm](/docs/reference/setup-tools/kubeadm/), which in turn use the
-API. However, you can also access the API directly using REST calls.
+API. However, you can also access the API directly using REST calls. -->
 
-Consider using one of the [client libraries](/docs/reference/using-api/client-libraries/)
-if you are writing an application using the Kubernetes API.
+Si vous souhaitez écrire une application utilisant l'API Kubernetes, privilégiez alors l'utilisation de l'une des [librairies clientes](/docs/reference/using-api/client-libraries/).
 
 <!-- body -->
 
