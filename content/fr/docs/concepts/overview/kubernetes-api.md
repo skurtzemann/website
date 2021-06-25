@@ -24,9 +24,9 @@ L'API Kubernetes vous permet d'interroger et de manipuler l'état des objets dan
 
 La plupart des opérations sont réalisées à l'aide de l'interface en ligne de commande 
 [kubectl](/fr/docs/reference/kubectl/overview/) 
-ou tout autres outils en ligne de commande, tel que 
-[kubeadm](/fr/docs/reference/setup-tools/kubeadm/), **which in turn use the
-API.** Cependant, il est également possible d'accéder directement à l'API via des appels (de type) REST.
+ou tous autres outils en ligne de commande, tel que 
+[kubeadm](/fr/docs/reference/setup-tools/kubeadm/), qui utilise également l'API.
+Cependant, il est également possible d'accéder directement à l'API via des appels (de type) REST.
 
 <!-- Most operations can be performed through the
 [kubectl](/docs/reference/kubectl/overview/) command-line interface or other
@@ -38,19 +38,22 @@ Si vous souhaitez écrire une application utilisant l'API Kubernetes, privilégi
 
 <!-- body -->
 
-## OpenAPI specification {#api-specification}
+## Spécification OpenAPI {#api-specification}
 
-Complete API details are documented using [OpenAPI](https://www.openapis.org/).
+Tous les détails de l'API sont documentés selon la norme [OpenAPI](https://www.openapis.org/). 
 
-The Kubernetes API server serves an OpenAPI spec via the `/openapi/v2` endpoint.
-You can request the response format using request headers as follows:
+L'API Kubernetes fournie une spécification OpenAPI sur l'URL `/openapi/v2`.
+Vous pouvez interroger le format de réponse à l'aide des en-têtes de requêtes comme ...
+
+<!-- The Kubernetes API server serves an OpenAPI spec via the `/openapi/v2` endpoint.
+You can request the response format using request headers as follows: -->
 
 <table>
-  <caption style="display:none">Valid request header values for OpenAPI v2 queries</caption>
+  <caption style="display:none">Valeurs possibles des en-têtes de requêtes des requêtes OpenAPI v2</caption>
   <thead>
      <tr>
-        <th>Header</th>
-        <th style="min-width: 50%;">Possible values</th>
+        <th>En-têtes</th>
+        <th style="min-width: 50%;">Valeurs possibles</th>
         <th>Notes</th>
      </tr>
   </thead>
@@ -63,11 +66,11 @@ You can request the response format using request headers as follows:
      <tr>
         <td rowspan="3"><code>Accept</code></td>
         <td><code>application/com.github.proto-openapi.spec.v2@v1.0+protobuf</code></td>
-        <td><em>mainly for intra-cluster use</em></td>
+        <td><em>pour une utilisation intra-cluster</em></td>
      </tr>
      <tr>
         <td><code>application/json</code></td>
-        <td><em>default</em></td>
+        <td><em>par défaut</em></td>
      </tr>
      <tr>
         <td><code>*</code></td>
@@ -82,9 +85,9 @@ about this format, see the [Kubernetes Protobuf serialization](https://github.co
 Interface Definition Language (IDL) files for each schema located in the Go
 packages that define the API objects.
 
-## Persistence
+## Persistance
 
-Kubernetes stores the serialized state of objects by writing them into
+Kubernetes stocke l'état sérialisé des objets en écrivant ces dernier dans
 {{< glossary_tooltip term_id="etcd" >}}.
 
 ## API groups and versioning
