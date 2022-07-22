@@ -14,7 +14,7 @@ For additional information on creating new content for the Kubernetes
 documentation, read the [Documentation Content Guide](/docs/contribute/style/content-guide/).
 
 Changes to the style guide are made by SIG Docs as a group. To propose a change
-or addition, [add it to the agenda](https://docs.google.com/document/d/1ddHwLK3kUMX1wVFIwlksjTk0MsqitBnWPe1LRa1Rx5A/edit) for an upcoming SIG Docs meeting, and attend the meeting to participate in the
+or addition, [add it to the agenda](https://bit.ly/sig-docs-agenda) for an upcoming SIG Docs meeting, and attend the meeting to participate in the
 discussion.
 
 <!-- body -->
@@ -361,7 +361,7 @@ Beware.
 
 ### Katacoda Embedded Live Environment
 
-This button lets users run Minikube in their browser using the [Katacoda Terminal](https://www.katacoda.com/embed/panel).
+This button lets users run Minikube in their browser using the Katacoda Terminal.
 It lowers the barrier of entry by allowing users to use Minikube with one click instead of going through the complete
 Minikube and Kubectl installation process locally.
 

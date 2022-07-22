@@ -12,8 +12,8 @@ card:
 
 ## {{% heading "prerequisites" %}}
 
-You must use a kubectl version that is within one minor version difference of your cluster. For example, a v{{< skew latestVersion >}} client can communicate with v{{< skew prevMinorVersion >}}, v{{< skew latestVersion >}}, and v{{< skew nextMinorVersion >}} control planes.
-Using the latest version of kubectl helps avoid unforeseen issues.
+You must use a kubectl version that is within one minor version difference of your cluster. For example, a v{{< skew currentVersion >}} client can communicate with v{{< skew currentVersionAddMinor -1 >}}, v{{< skew currentVersionAddMinor 0 >}}, and v{{< skew currentVersionAddMinor 1 >}} control planes.
+Using the latest compatible version of kubectl helps avoid unforeseen issues.
 
 ## Install kubectl on macOS
 
@@ -69,7 +69,7 @@ The following methods exist for installing kubectl on macOS:
    Validate the kubectl binary against the checksum file:
 
    ```bash
-   echo "$(<kubectl.sha256)  kubectl" | shasum -a 256 --check
+   echo "$(cat kubectl.sha256)  kubectl" | shasum -a 256 --check
    ```
 
    If valid, the output is:
@@ -111,6 +111,11 @@ The following methods exist for installing kubectl on macOS:
    ```bash
    kubectl version --client
    ```
+   Or use this for detailed view of version:
+
+   ```cmd
+   kubectl version --client --output=yaml
+   ```
 
 ### Install with Homebrew on macOS
 
@@ -119,7 +124,7 @@ If you are on macOS and using [Homebrew](https://brew.sh/) package manager, you 
 1. Run the installation command:
 
    ```bash
-   brew install kubectl 
+   brew install kubectl
    ```
 
    or
@@ -155,18 +160,95 @@ If you are on macOS and using [Macports](https://macports.org/) package manager,
 
 {{< include "included/verify-kubectl.md" >}}
 
-## Optional kubectl configurations
+## Optional kubectl configurations and plugins
 
 ### Enable shell autocompletion
 
-kubectl provides autocompletion support for Bash and Zsh, which can save you a lot of typing.
+kubectl provides autocompletion support for Bash, Zsh, Fish, and PowerShell which can save you a lot of typing.
 
-Below are the procedures to set up autocompletion for Bash and Zsh.
+Below are the procedures to set up autocompletion for Bash, Fish, and Zsh.
 
 {{< tabs name="kubectl_autocompletion" >}}
 {{< tab name="Bash" include="included/optional-kubectl-configs-bash-mac.md" />}}
+{{< tab name="Fish" include="included/optional-kubectl-configs-fish.md" />}}
 {{< tab name="Zsh" include="included/optional-kubectl-configs-zsh.md" />}}
 {{< /tabs >}}
+
+### Install `kubectl convert` plugin
+
+{{< include "included/kubectl-convert-overview.md" >}}
+
+1. Download the latest release with the command:
+
+   {{< tabs name="download_convert_binary_macos" >}}
+   {{< tab name="Intel" codelang="bash" >}}
+   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl-convert"
+   {{< /tab >}}
+   {{< tab name="Apple Silicon" codelang="bash" >}}
+   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl-convert"
+   {{< /tab >}}
+   {{< /tabs >}}
+
+1. Validate the binary (optional)
+
+   Download the kubectl-convert checksum file:
+
+   {{< tabs name="download_convert_checksum_macos" >}}
+   {{< tab name="Intel" codelang="bash" >}}
+   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl-convert.sha256"
+   {{< /tab >}}
+   {{< tab name="Apple Silicon" codelang="bash" >}}
+   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl-convert.sha256"
+   {{< /tab >}}
+   {{< /tabs >}}
+
+   Validate the kubectl-convert binary against the checksum file:
+
+   ```bash
+   echo "$(cat kubectl-convert.sha256)  kubectl-convert" | shasum -a 256 --check
+   ```
+
+   If valid, the output is:
+
+   ```console
+   kubectl-convert: OK
+   ```
+
+   If the check fails, `shasum` exits with nonzero status and prints output similar to:
+
+   ```bash
+   kubectl-convert: FAILED
+   shasum: WARNING: 1 computed checksum did NOT match
+   ```
+
+   {{< note >}}
+   Download the same version of the binary and checksum.
+   {{< /note >}}
+
+1. Make kubectl-convert binary executable
+
+   ```bash
+   chmod +x ./kubectl-convert
+   ```
+
+1. Move the kubectl-convert binary to a file location on your system `PATH`.
+
+   ```bash
+   sudo mv ./kubectl-convert /usr/local/bin/kubectl-convert
+   sudo chown root: /usr/local/bin/kubectl-convert
+   ```
+
+   {{< note >}}
+   Make sure `/usr/local/bin` is in your PATH environment variable.
+   {{< /note >}}
+
+1. Verify plugin is successfully installed
+
+   ```shell
+   kubectl convert --help
+   ```
+
+   If you do not see an error, it means the plugin is successfully installed.
 
 ## {{% heading "whatsnext" %}}
 

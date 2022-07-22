@@ -31,7 +31,7 @@ weight: 60
 - 클라우드 공급자 또는 하이퍼바이저의 오류로 인한 VM 장애
 - 커널 패닉
 - 클러스터 네트워크 파티션의 발생으로 클러스터에서 노드가 사라짐
-- 노드의 [리소스 부족](/docs/tasks/administer-cluster/out-of-resource/)으로 파드가 축출됨
+- 노드의 [리소스 부족](/ko/docs/concepts/scheduling-eviction/node-pressure-eviction/)으로 파드가 축출됨
 
 리소스 부족을 제외한 나머지 조건은 대부분의 사용자가 익숙할 것이다.
 왜냐하면
@@ -71,12 +71,12 @@ weight: 60
 
 - 파드가 필요로 하는 [리소스를 요청](/ko/docs/tasks/configure-pod-container/assign-memory-resource/)하는지 확인한다.
 - 고가용성이 필요한 경우 애플리케이션을 복제한다.
-  (복제된 [스테이트리스](/docs/tasks/run-application/run-stateless-application-deployment/) 및
+  (복제된 [스테이트리스](/ko/docs/tasks/run-application/run-stateless-application-deployment/) 및
   [스테이트풀](/docs/tasks/run-application/run-replicated-stateful-application/) 애플리케이션에 대해 알아보기.)
 - 복제된 애플리케이션의 구동 시 훨씬 더 높은 가용성을 위해 랙 전체
   ([안티-어피니티](/ko/docs/concepts/scheduling-eviction/assign-pod-node/#파드간-어피니티와-안티-어피니티) 이용)
   또는 영역 간
-  ([다중 영역 클러스터](/docs/setup/multiple-zones)를 이용한다면)에
+  ([다중 영역 클러스터](/ko/docs/setup/best-practices/multiple-zones/)를 이용한다면)에
   애플리케이션을 분산해야 한다.
 
 자발적 중단의 빈도는 다양하다. 기본적인 쿠버네티스 클러스터에서는 자동화된 자발적 중단은 발생하지 않는다(사용자가 지시한 자발적 중단만 발생한다).
@@ -86,7 +86,7 @@ weight: 60
 단편화를 제거하고 노드의 효율을 높이는 과정에서 자발적 중단을 야기할 수 있다.
 클러스터 관리자 또는 호스팅 공급자는
 예측 가능한 자발적 중단 수준에 대해 문서화해야 한다.
-파드 스펙 안에 [프라이어리티클래스 사용하기](/ko/docs/concepts/configuration/pod-priority-preemption/)와 같은 특정 환경설정 옵션
+파드 스펙 안에 [프라이어리티클래스 사용하기](/ko/docs/concepts/scheduling-eviction/pod-priority-preemption/)와 같은 특정 환경설정 옵션
 또한 자발적(+ 비자발적) 중단을 유발할 수 있다.
 
 
@@ -128,8 +128,8 @@ Eviction API는 한 번에 1개(2개의 파드가 아닌)의 파드의 자발적
 기반으로 계산한다. 컨트롤 플레인은 파드의 `.metadata.ownerReferences` 를 검사하여
 소유하는 워크로드 리소스를 발견한다.
 
-PDB는 [비자발적 중단](#자발적-중단과-비자발적-중단)이 발생하는 것을 막을 수는 없지만,
-버짓이 차감된다.
+[비자발적 중단](#자발적-중단과-비자발적-중단)은 PDB로는 막을 수 없지만, 
+버짓은 차감된다.
 
 애플리케이션의 롤링 업그레이드로 파드가 삭제되거나 사용할 수 없는 경우 중단 버짓에 영향을 준다.
 그러나 워크로드 리소스(디플로이먼트, 스테이트풀셋과 같은)는

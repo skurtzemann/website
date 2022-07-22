@@ -15,7 +15,7 @@ weight: 10
 * [Cluster DNS](/ja/docs/concepts/services-networking/dns-pod-service/)
 * [Headless Service](/ja/docs/concepts/services-networking/service/#headless-services)
 * [PersistentVolume](/ja/docs/concepts/storage/persistent-volumes/)
-* [PersistentVolumeのプロビジョニング](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/staging/persistent-volume-provisioning/)
+* [PersistentVolumeのプロビジョニング](https://github.com/kubernetes/examples/tree/master/staging/persistent-volume-provisioning/)
 * [StatefulSet](/ja/docs/concepts/workloads/controllers/statefulset/)
 * [kubectl](/docs/reference/kubectl/kubectl/)コマンドラインツール
 
@@ -711,10 +711,10 @@ StatefulSetは、非カスケードな削除とカスケードな削除の両方
 kubectl get pods -w -l app=nginx
 ```
 
-[`kubectl delete`](/docs/reference/generated/kubectl/kubectl-commands/#delete)を使用して、StatefulSetを削除します。このとき、`--cascade=false`パラメーターをコマンドに与えてください。このパラメーターは、Kubernetesに対して、StatefulSetだけを削除して配下のPodは削除しないように指示します。
+[`kubectl delete`](/docs/reference/generated/kubectl/kubectl-commands/#delete)を使用して、StatefulSetを削除します。このとき、`--cascade=orphan`パラメーターをコマンドに与えてください。このパラメーターは、Kubernetesに対して、StatefulSetだけを削除して配下のPodは削除しないように指示します。
 
 ```shell
-kubectl delete statefulset web --cascade=false
+kubectl delete statefulset web --cascade=orphan
 ```
 ```
 statefulset.apps "web" deleted
@@ -814,7 +814,7 @@ web-1
 kubectl get pods -w -l app=nginx
 ```
 
-2つ目のターミナルで、StatefulSetをもう一度削除します。今回は、`--cascade=false`パラメーターを省略します。
+2つ目のターミナルで、StatefulSetをもう一度削除します。今回は、`--cascade=orphan`パラメーターを省略します。
 
 ```shell
 kubectl delete statefulset web

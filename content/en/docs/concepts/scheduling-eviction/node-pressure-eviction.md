@@ -66,8 +66,8 @@ the signal.
 
 The value for `memory.available` is derived from the cgroupfs instead of tools
 like `free -m`. This is important because `free -m` does not work in a
-container, and if users use the [node
-allocatable](/docs/tasks/administer-cluster/reserve-compute-resources/#node-allocatable) feature, out of resource decisions
+container, and if users use the [node allocatable](/docs/tasks/administer-cluster/reserve-compute-resources/#node-allocatable)
+feature, out of resource decisions
 are made local to the end user Pod part of the cgroup hierarchy as well as the
 root node. This [script](/examples/admin/resource/memory-available.sh)
 reproduces the same set of steps that the kubelet performs to calculate
@@ -85,10 +85,15 @@ The kubelet supports the following filesystem partitions:
 Kubelet auto-discovers these filesystems and ignores other filesystems. Kubelet
 does not support other configurations.
 
-{{<note>}}
-Some kubelet garbage collection features are deprecated in favor of eviction.
-For a list of the deprecated features, see [kubelet garbage collection deprecation](/docs/concepts/cluster-administration/kubelet-garbage-collection/#deprecation).
-{{</note>}}
+Some kubelet garbage collection features are deprecated in favor of eviction:
+
+| Existing Flag | New Flag | Rationale |
+| ------------- | -------- | --------- |
+| `--image-gc-high-threshold` | `--eviction-hard` or `--eviction-soft` | existing eviction signals can trigger image garbage collection |
+| `--image-gc-low-threshold` | `--eviction-minimum-reclaim` | eviction reclaims achieve the same behavior |
+| `--maximum-dead-containers` | | deprecated once old logs are stored outside of container's context |
+| `--maximum-dead-containers-per-container` | | deprecated once old logs are stored outside of container's context |
+| `--minimum-container-ttl-duration` | | deprecated once old logs are stored outside of container's context |
 
 ### Eviction thresholds
 
@@ -193,7 +198,7 @@ resources based on the filesystems on the node.
 If the node has a dedicated `imagefs` filesystem for container runtimes to use,
 the kubelet does the following:
 
-  * If the `nodefs` filesystem meets the eviction threshlds, the kubelet garbage collects
+  * If the `nodefs` filesystem meets the eviction thresholds, the kubelet garbage collects
     dead pods and containers. 
   * If the `imagefs` filesystem meets the eviction thresholds, the kubelet
     deletes all unused images. 
@@ -234,8 +239,8 @@ so the above scenario will not apply if the node is, for example, under `DiskPre
 
 `Guaranteed` pods are guaranteed only when requests and limits are specified for
 all the containers and they are equal. These pods will never be evicted because
-of another pod's resource consumption. If a system daemon (such as `kubelet`,
-`docker`, and `journald`) is consuming more resources than were reserved via 
+of another pod's resource consumption. If a system daemon (such as `kubelet`
+and `journald`) is consuming more resources than were reserved via 
 `system-reserved` or `kube-reserved` allocations, and the node only has
 `Guaranteed` or `Burstable` pods using less resources than requests left on it,
 then the kubelet must choose to evict one of these pods to preserve node stability

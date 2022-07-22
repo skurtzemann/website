@@ -31,7 +31,7 @@ an application.  Examples are:
 - cloud provider or hypervisor failure makes VM disappear
 - a kernel panic
 - the node disappears from the cluster due to cluster network partition
-- eviction of a pod due to the node being [out-of-resources](/docs/tasks/administer-cluster/out-of-resource/).
+- eviction of a pod due to the node being [out-of-resources](/docs/concepts/scheduling-eviction/node-pressure-eviction/).
 
 Except for the out-of-resources condition, all these conditions
 should be familiar to most users; they are not specific
@@ -128,8 +128,8 @@ The "intended" number of pods is computed from the `.spec.replicas` of the workl
 that is managing those pods. The control plane discovers the owning workload resource by
 examining the `.metadata.ownerReferences` of the Pod.
 
-PDBs cannot prevent [involuntary disruptions](#voluntary-and-involuntary-disruptions) from
-occurring, but they do count against the budget.
+[Involuntary disruptions](#voluntary-and-involuntary-disruptions) cannot be prevented by PDBs; however they
+do count against the budget.
 
 Pods which are deleted or unavailable due to a rolling upgrade to an application do count
 against the disruption budget, but workload resources (such as Deployment and StatefulSet)
